@@ -10,6 +10,41 @@ namespace StansGrocery
         public StansGrocery()
         {
             InitializeComponent();
+            SetDefaults();
+        }
+        //Program Logic-------------------------------------------------------------------------------------------------
+
+        List<string> Grocery;
+        string GroceryFilePath = "";
+
+        void SetDefaults()
+        {
+            SearchTextBox.Text = "";
+            SearchTextBox.Focus();
+            FilterComboBox.SelectedIndex = 0;
+            FilterByAisleRadioButton.Checked = true;
+        }
+
+
+
+        //Event Handlers-------------------------------------------------------------------------------------------------
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            SetDefaults();
+        }
+        private void FilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

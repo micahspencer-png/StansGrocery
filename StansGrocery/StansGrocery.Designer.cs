@@ -39,7 +39,7 @@
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             MainToolTip = new ToolTip(components);
-            SearchButton = new Button();
+            ClearButton = new Button();
             FilterGroupBox = new GroupBox();
             FilterByCategoryRadioButton = new RadioButton();
             FilterByAisleRadioButton = new RadioButton();
@@ -47,6 +47,7 @@
             DisplayListBox = new ListBox();
             SearchTextBox = new TextBox();
             DisplayLabel = new Label();
+            SearchButton = new Button();
             ContextMenuStrip.SuspendLayout();
             TopMenuStrip.SuspendLayout();
             FilterGroupBox.SuspendLayout();
@@ -65,12 +66,14 @@
             searchToolStripMenuItem1.Name = "searchToolStripMenuItem1";
             searchToolStripMenuItem1.Size = new Size(124, 24);
             searchToolStripMenuItem1.Text = "Search";
+            searchToolStripMenuItem1.Click += SearchButton_Click;
             // 
             // exitToolStripMenuItem1
             // 
             exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
             exitToolStripMenuItem1.Size = new Size(124, 24);
             exitToolStripMenuItem1.Text = "Exit";
+            exitToolStripMenuItem1.Click += exitToolStripMenuItem_Click;
             // 
             // TopMenuStrip
             // 
@@ -88,19 +91,21 @@
             fileToolStripMenuItem.Font = new Font("Times New Roman", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(50, 23);
-            fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.Text = "&File";
             // 
             // searchToolStripMenuItem
             // 
             searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            searchToolStripMenuItem.Size = new Size(138, 26);
-            searchToolStripMenuItem.Text = "Search";
+            searchToolStripMenuItem.Size = new Size(224, 26);
+            searchToolStripMenuItem.Text = "&Search";
+            searchToolStripMenuItem.Click += SearchButton_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(138, 26);
-            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Size = new Size(224, 26);
+            exitToolStripMenuItem.Text = "E&xit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -108,22 +113,23 @@
             helpToolStripMenuItem.Font = new Font("Times New Roman", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             helpToolStripMenuItem.Size = new Size(56, 23);
-            helpToolStripMenuItem.Text = "Help";
+            helpToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(133, 26);
-            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Text = "A&bout";
             // 
-            // SearchButton
+            // ClearButton
             // 
-            SearchButton.Location = new Point(267, 455);
-            SearchButton.Name = "SearchButton";
-            SearchButton.Size = new Size(151, 65);
-            SearchButton.TabIndex = 2;
-            SearchButton.Text = "Accept";
-            SearchButton.UseVisualStyleBackColor = true;
+            ClearButton.Location = new Point(12, 455);
+            ClearButton.Name = "ClearButton";
+            ClearButton.Size = new Size(151, 65);
+            ClearButton.TabIndex = 2;
+            ClearButton.Text = "&Clear";
+            ClearButton.UseVisualStyleBackColor = true;
+            ClearButton.Click += ClearButton_Click;
             // 
             // FilterGroupBox
             // 
@@ -143,29 +149,31 @@
             FilterByCategoryRadioButton.Name = "FilterByCategoryRadioButton";
             FilterByCategoryRadioButton.Size = new Size(90, 24);
             FilterByCategoryRadioButton.TabIndex = 0;
-            FilterByCategoryRadioButton.TabStop = true;
-            FilterByCategoryRadioButton.Text = "Category";
+            FilterByCategoryRadioButton.Text = "Cate&gory";
             FilterByCategoryRadioButton.UseVisualStyleBackColor = true;
             // 
             // FilterByAisleRadioButton
             // 
             FilterByAisleRadioButton.AutoSize = true;
+            FilterByAisleRadioButton.Checked = true;
             FilterByAisleRadioButton.Location = new Point(134, 23);
             FilterByAisleRadioButton.Name = "FilterByAisleRadioButton";
             FilterByAisleRadioButton.Size = new Size(62, 24);
             FilterByAisleRadioButton.TabIndex = 0;
             FilterByAisleRadioButton.TabStop = true;
-            FilterByAisleRadioButton.Text = "Aisle";
+            FilterByAisleRadioButton.Text = "&Aisle";
             FilterByAisleRadioButton.UseVisualStyleBackColor = true;
             // 
             // FilterComboBox
             // 
             FilterComboBox.Font = new Font("Times New Roman", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FilterComboBox.FormattingEnabled = true;
+            FilterComboBox.Items.AddRange(new object[] { "", "Show All" });
             FilterComboBox.Location = new Point(349, 36);
             FilterComboBox.Name = "FilterComboBox";
             FilterComboBox.Size = new Size(228, 27);
             FilterComboBox.TabIndex = 4;
+            FilterComboBox.SelectedIndexChanged += FilterComboBox_SelectedIndexChanged;
             // 
             // DisplayListBox
             // 
@@ -195,6 +203,16 @@
             DisplayLabel.TabIndex = 7;
             DisplayLabel.Text = "label1";
             // 
+            // SearchButton
+            // 
+            SearchButton.Location = new Point(169, 455);
+            SearchButton.Name = "SearchButton";
+            SearchButton.Size = new Size(151, 65);
+            SearchButton.TabIndex = 2;
+            SearchButton.Text = "&Search";
+            SearchButton.UseVisualStyleBackColor = true;
+            SearchButton.Click += SearchButton_Click;
+            // 
             // StansGrocery
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -205,6 +223,7 @@
             Controls.Add(DisplayListBox);
             Controls.Add(FilterComboBox);
             Controls.Add(SearchButton);
+            Controls.Add(ClearButton);
             Controls.Add(FilterGroupBox);
             Controls.Add(TopMenuStrip);
             MainMenuStrip = TopMenuStrip;
@@ -231,7 +250,7 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
-        private Button SearchButton;
+        private Button ClearButton;
         private GroupBox FilterGroupBox;
         private RadioButton FilterByCategoryRadioButton;
         private RadioButton FilterByAisleRadioButton;
@@ -239,5 +258,6 @@
         private ListBox DisplayListBox;
         private TextBox SearchTextBox;
         private Label DisplayLabel;
+        private Button SearchButton;
     }
 }
