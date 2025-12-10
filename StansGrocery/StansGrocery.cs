@@ -26,11 +26,14 @@ namespace StansGrocery
         {
             try
             {
+
                 using (StreamReader fileRead = new StreamReader(GroceryFilePath))
                 {
-                    string inventory = fileRead.ReadLine();
-                    GroceryList = inventory.Split(":");
-
+                    do
+                    {
+                        string inventory = fileRead.ReadLine();
+                        GroceryList = inventory.Split(":");
+                    } while (fileRead.EndOfStream == false);
                 }
             }
             catch (Exception)
@@ -50,6 +53,11 @@ namespace StansGrocery
             FilterByAisleRadioButton.Checked = true;
         }
 
+        void ChangeCombobox() 
+        { 
+        
+        }
+
         void DisplayResult()
         {
             DisplayLabel.Text = $"{item} is on {aisle} with the {category}.";
@@ -67,7 +75,7 @@ namespace StansGrocery
         }
         private void FilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ChangeCombobox();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
