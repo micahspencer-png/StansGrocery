@@ -10,17 +10,38 @@ namespace StansGrocery
         public StansGrocery()
         {
             InitializeComponent();
+            GroceryPath();
             SetDefaults();
         }
         //Program Logic-------------------------------------------------------------------------------------------------
 
         List<string> Grocery;
-        string GroceryFilePath = "";
+        string GroceryFilePath = "..\\..\\..\\..\\Grocery.txt";
         string[] GroceryList;
-        string item = GroceryList[0];
-        string aisle = GroceryList[1];
-        string category = GroceryList[2];
-        string number = GroceryList[3];
+        string item = "";
+        string aisle = "";
+        string category = "";
+
+        void GroceryPath()
+        {
+            try
+            {
+                using (StreamReader fileRead = new StreamReader(GroceryFilePath))
+                {
+                    string inventory = fileRead.ReadLine();
+                    GroceryList = inventory.Split(":");
+
+                }
+            }
+            catch (Exception)
+            {
+                using (StreamWriter fileWrite = File.CreateText(GroceryFilePath))
+                {
+                    fileWrite.WriteLine("Item:Aisle:Category");
+                }
+            }
+        }
+
         void SetDefaults()
         {
             SearchTextBox.Text = "";
@@ -29,9 +50,9 @@ namespace StansGrocery
             FilterByAisleRadioButton.Checked = true;
         }
 
-        void DisplayResult() 
+        void DisplayResult()
         {
-            DisplayLabel.Text = $"{item} is on {aisle} with the {category}. There are {number} left";
+            DisplayLabel.Text = $"{item} is on {aisle} with the {category}.";
         }
 
         //Event Handlers-------------------------------------------------------------------------------------------------
@@ -52,6 +73,11 @@ namespace StansGrocery
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FilterByAisleRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

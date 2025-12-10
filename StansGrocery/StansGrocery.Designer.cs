@@ -96,14 +96,14 @@
             // searchToolStripMenuItem
             // 
             searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            searchToolStripMenuItem.Size = new Size(224, 26);
+            searchToolStripMenuItem.Size = new Size(138, 26);
             searchToolStripMenuItem.Text = "&Search";
             searchToolStripMenuItem.Click += SearchButton_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(224, 26);
+            exitToolStripMenuItem.Size = new Size(138, 26);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -151,6 +151,7 @@
             FilterByCategoryRadioButton.TabIndex = 0;
             FilterByCategoryRadioButton.Text = "Cate&gory";
             FilterByCategoryRadioButton.UseVisualStyleBackColor = true;
+            FilterByCategoryRadioButton.CheckedChanged += FilterByAisleRadioButton_CheckedChanged;
             // 
             // FilterByAisleRadioButton
             // 
@@ -163,6 +164,7 @@
             FilterByAisleRadioButton.TabStop = true;
             FilterByAisleRadioButton.Text = "&Aisle";
             FilterByAisleRadioButton.UseVisualStyleBackColor = true;
+            FilterByAisleRadioButton.CheckedChanged += FilterByAisleRadioButton_CheckedChanged;
             // 
             // FilterComboBox
             // 
