@@ -15,7 +15,7 @@ namespace StansGrocery
         }
         //Program Logic-------------------------------------------------------------------------------------------------
 
-        List<string> Grocery;
+        string Grocery;
         string GroceryFilePath = "..\\..\\..\\..\\Grocery.txt";
         string[] GroceryList;
         string item = "";
@@ -29,11 +29,14 @@ namespace StansGrocery
 
                 using (StreamReader fileRead = new StreamReader(GroceryFilePath))
                 {
+                    
                     do
                     {
-                        string inventory = fileRead.ReadLine();
-                        GroceryList = inventory.Split(":");
+                        Grocery = fileRead.ReadLine();
+                        GroceryList = Grocery.Split(":");
+                        
                     } while (fileRead.EndOfStream == false);
+                    DisplayListBox.Items.Add(GroceryList);
                 }
             }
             catch (Exception)
@@ -51,9 +54,15 @@ namespace StansGrocery
             SearchTextBox.Focus();
             FilterComboBox.SelectedIndex = 0;
             FilterByAisleRadioButton.Checked = true;
+            DisplayListBox.Items.Clear();
         }
 
         void ChangeCombobox() 
+        { 
+        
+        }
+
+        void Filter() 
         { 
         
         }
@@ -85,7 +94,7 @@ namespace StansGrocery
 
         private void FilterByAisleRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-
+            Filter();
         }
     }
 }
