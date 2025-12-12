@@ -1,2 +1,21 @@
-Item:Aisle:Category
-Cinnamon:Aisle7:HerbsandSpices
+Item:Aisle:Category:
+Corn: Aisle 1: Vegetables:
+Carrots: Aisle 1: Vegetables:
+Ice Cream: Aisle 2: Frozen Goods:
+Frozen Pie: Aisle 2: Frozen Goods:
+Ketchup: Aisle 3: Condiments:
+Mustard: Aisle 3: Condiments:
+Ramen Noodles: Aisle 4: Pasta:
+Macaroni Noodles: Aisle 4: Pasta:
+Tortillas: Aisle 5: Ethnic Foods:
+Soy Sauce: Aisle 5: Ethnic Foods:
+Hamburger Meat: Aisle 6: Meats:
+Chicken: Aisle 6: Meats:
+Cinnamon: Aisle 7:Herbs and Spices:
+Black Pepper: Aisle 7: Herbs and Spices:
+Potato Chips: Aisle 8: Chips and Snacks:
+Beef Jerky: Aisle 8: Chips and Snacks:
+Snickers Bar: Aisle 9: Candy:
+Mountain Dew: Aisle 9: Soda:
+Milk: Aisle 10: Dairy:
+Half and Half: Aisle 10: Dairy:

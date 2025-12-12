@@ -29,21 +29,21 @@ namespace StansGrocery
 
                 using (StreamReader fileRead = new StreamReader(GroceryFilePath))
                 {
-                    
+
                     do
                     {
-                        Grocery = fileRead.ReadLine();
+                        Grocery = fileRead.ReadToEnd();
                         GroceryList = Grocery.Split(":");
-                        
+
                     } while (fileRead.EndOfStream == false);
-                    DisplayListBox.Items.Add(GroceryList);
+                    
                 }
             }
             catch (Exception)
             {
                 using (StreamWriter fileWrite = File.CreateText(GroceryFilePath))
                 {
-                    fileWrite.WriteLine("Item:Aisle:Category");
+                    fileWrite.WriteLine("Item:Aisle:Category:");
                 }
             }
         }
