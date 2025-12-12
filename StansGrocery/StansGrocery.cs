@@ -12,13 +12,14 @@ namespace StansGrocery
             InitializeComponent();
             SetDefaults();
             GroceryPath();
-            
+            Filter();
         }
         //Program Logic-------------------------------------------------------------------------------------------------
 
         string Grocery;
         string GroceryFilePath = "..\\..\\..\\..\\Grocery.txt";
         string[] GroceryList;
+        string TotalGroceryList;
         string item = "";
         string aisle = "";
         string category = "";
@@ -34,18 +35,27 @@ namespace StansGrocery
                     do
                     {
                         Grocery = fileRead.ReadLine();
-                        GroceryList = Grocery.Split(":");
-                        DisplayListBox.Items.Add(GroceryList[0]);
+                        Grocery = Grocery.Replace("$$ITM", "");
+                        Grocery = Grocery.Replace("##LOC", "");
+                        Grocery = Grocery.Replace("%%CAT", "");
+                        Grocery = Grocery.Replace('"', ' ');
+                        GroceryList = Grocery.Split(",");
+                        Grocery = Grocery + "," + "\n";
+                        TotalGroceryList += Grocery;
+                        if (GroceryList[0] != " ")
+                        {
+                            DisplayListBox.Items.Add(GroceryList[0]);
+                        }
                     } while (fileRead.EndOfStream == false);
-                    
-                    
+
+                    GroceryList = TotalGroceryList.Split(",");
                 }
             }
             catch (Exception)
             {
                 using (StreamWriter fileWrite = File.CreateText(GroceryFilePath))
                 {
-                    fileWrite.WriteLine("Item:Aisle:Category:");
+                    fileWrite.WriteLine("$$ITM{name}", "##LOC{aisle}", "%%CAT{category}");
                 }
             }
         }
@@ -59,33 +69,37 @@ namespace StansGrocery
             DisplayListBox.Items.Clear();
         }
 
-        void ChangeCombobox() 
-        { 
-        
+        void ChangeCombobox()
+        {
+
         }
 
-        void Filter() 
-        { 
+        void Filter()
+        {
             FilterComboBox.Items.Clear();
             if (FilterByAisleRadioButton.Checked == true)
             {
-                FilterComboBox.Items.Add(GroceryList[1]);
+                FilterComboBox.Items.Add("Show All");
+
             }
-            else 
+            else
             {
-                FilterComboBox.Items.Add(GroceryList[2]);
+                FilterComboBox.Items.Add("Show All");
             }
         }
 
-        void DisplayResult()
+        void DisplayResult(int order)
         {
-            DisplayLabel.Text = $"{item} is on {aisle} with the {category}.";
+            item = GroceryList[0 + (3 * order)];
+            aisle = " Aisle" + GroceryList[1 + (3 * order)];
+            category = GroceryList[2 + (3 * order)];
+            DisplayLabel.Text = $"{item} is on {aisle} with the {category}";
         }
 
         //Event Handlers-------------------------------------------------------------------------------------------------
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            GroceryPath();
+
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -105,6 +119,12 @@ namespace StansGrocery
         private void FilterByAisleRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             Filter();
+        }
+
+        private void DisplayListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int order = DisplayListBox.SelectedIndex;
+            DisplayResult(order);
         }
     }
 }

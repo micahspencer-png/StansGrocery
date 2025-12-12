@@ -186,6 +186,7 @@
             DisplayListBox.Name = "DisplayListBox";
             DisplayListBox.Size = new Size(577, 270);
             DisplayListBox.TabIndex = 5;
+            DisplayListBox.SelectedIndexChanged += DisplayListBox_SelectedIndexChanged;
             // 
             // SearchTextBox
             // 
@@ -201,9 +202,8 @@
             DisplayLabel.Font = new Font("Times New Roman", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DisplayLabel.Location = new Point(12, 357);
             DisplayLabel.Name = "DisplayLabel";
-            DisplayLabel.Size = new Size(51, 19);
+            DisplayLabel.Size = new Size(0, 19);
             DisplayLabel.TabIndex = 7;
-            DisplayLabel.Text = "label1";
             // 
             // SearchButton
             // 
