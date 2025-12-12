@@ -10,8 +10,9 @@ namespace StansGrocery
         public StansGrocery()
         {
             InitializeComponent();
-            GroceryPath();
             SetDefaults();
+            GroceryPath();
+            
         }
         //Program Logic-------------------------------------------------------------------------------------------------
 
@@ -32,10 +33,11 @@ namespace StansGrocery
 
                     do
                     {
-                        Grocery = fileRead.ReadToEnd();
+                        Grocery = fileRead.ReadLine();
                         GroceryList = Grocery.Split(":");
-
+                        DisplayListBox.Items.Add(GroceryList[0]);
                     } while (fileRead.EndOfStream == false);
+                    
                     
                 }
             }
@@ -64,7 +66,15 @@ namespace StansGrocery
 
         void Filter() 
         { 
-        
+            FilterComboBox.Items.Clear();
+            if (FilterByAisleRadioButton.Checked == true)
+            {
+                FilterComboBox.Items.Add(GroceryList[1]);
+            }
+            else 
+            {
+                FilterComboBox.Items.Add(GroceryList[2]);
+            }
         }
 
         void DisplayResult()
@@ -75,7 +85,7 @@ namespace StansGrocery
         //Event Handlers-------------------------------------------------------------------------------------------------
         private void SearchButton_Click(object sender, EventArgs e)
         {
-
+            GroceryPath();
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
