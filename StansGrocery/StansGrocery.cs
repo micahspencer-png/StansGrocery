@@ -45,13 +45,16 @@ namespace StansGrocery
                         Grocery = Grocery.Replace("##LOC", "Aisle ");
                         Grocery = Grocery.Replace("%%CAT", "");
                         Grocery = Grocery.Replace('"', ' ');
-                        //Grocery = Grocery.ToLower();
+                        
                         GroceryList = Grocery.Split(",");
                         Grocery = Grocery + "," + "\n";
                         TotalGroceryList += Grocery;
+                        
                         if (GroceryList[0] != "")
                         {
                             DisplayListBox.Items.Add(GroceryList[0]);
+                            Grocery = GroceryList[0].ToLower();
+                            SearchList = Grocery.Split(",");
                         }
                         index++;
                     } while (fileRead.EndOfStream == false);
@@ -183,7 +186,7 @@ namespace StansGrocery
             {
                 for (int r = 0; r < index; r++)
                 {
-                    if (GroceryList[(0 + (3 * r))].Contains(searchString))
+                    if (SearchList[(0 + (3 * r))].Contains(searchString))
                     {
                         DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
                     }
@@ -240,8 +243,7 @@ namespace StansGrocery
         }
 
         private void DisplayListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
+        { 
             DisplayResult();
         }
     }
