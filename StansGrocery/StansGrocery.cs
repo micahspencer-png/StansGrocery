@@ -160,8 +160,28 @@ namespace StansGrocery
         }
 
         void SearchField() 
-        { 
-            
+        {
+            string search = SearchTextBox.Text;
+            search = search.ToLower();
+
+
+            DisplayListBox.Items.Clear();
+
+            if (search == "zzz")
+            {
+                this.Close();
+            }
+
+            else 
+            {
+                for (int r = 0; r < index; r++)
+                {
+                    if (GroceryList[(0 + (3 * r))].Contains(search))
+                    {
+                        DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
+                    }
+                }
+            }
         }
 
         void DisplayResult()
