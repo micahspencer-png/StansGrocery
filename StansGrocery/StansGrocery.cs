@@ -1,3 +1,5 @@
+using System.Diagnostics.Eventing.Reader;
+
 namespace StansGrocery
 {
     //Micah Spencer
@@ -23,7 +25,10 @@ namespace StansGrocery
         string item = "";
         string aisle = "";
         string category = "";
-
+        string[] FilterIndex;
+        string[] DisplayBoxList;
+        int index = 0;
+        string FilterList;
         void GroceryPath()
         {
             try
@@ -31,21 +36,23 @@ namespace StansGrocery
 
                 using (StreamReader fileRead = new StreamReader(GroceryFilePath))
                 {
-
+                    
                     do
                     {
                         Grocery = fileRead.ReadLine();
                         Grocery = Grocery.Replace("$$ITM", "");
-                        Grocery = Grocery.Replace("##LOC", "");
+                        Grocery = Grocery.Replace("##LOC", "Aisle ");
                         Grocery = Grocery.Replace("%%CAT", "");
                         Grocery = Grocery.Replace('"', ' ');
+                        Grocery = Grocery.ToLower();
                         GroceryList = Grocery.Split(",");
                         Grocery = Grocery + "," + "\n";
                         TotalGroceryList += Grocery;
-                        if (GroceryList[0] != " ")
+                        if (GroceryList[0] != "")
                         {
                             DisplayListBox.Items.Add(GroceryList[0]);
                         }
+                        index++;
                     } while (fileRead.EndOfStream == false);
 
                     GroceryList = TotalGroceryList.Split(",");
@@ -71,35 +78,114 @@ namespace StansGrocery
 
         void ChangeCombobox()
         {
+            string comboitem = FilterComboBox.SelectedItem.ToString();
+            DisplayListBox.Items.Clear();
 
+            if (comboitem == "Show All")
+            {
+                for (int r = 0; r < index; r++)
+                {
+                    DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
+                }
+            }
+
+            else 
+            {
+                if (FilterByAisleRadioButton.Checked == true)
+                {
+                    for (int r = 0; r < index; r++)
+                    {
+                        if (GroceryList[(1 + (3 * r))].Contains(comboitem))
+                        {
+                            DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
+                        }
+                    }
+                }
+
+                else
+                {
+                    for (int r = 0; r < index; r++)
+                    {
+                        if (GroceryList[2 + (3 * r)].Contains(comboitem))
+                        {
+                            DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
+                        }
+                    }
+                }
+            }
         }
 
         void Filter()
         {
             FilterComboBox.Items.Clear();
+            FilterComboBox.Items.Add("Show All");
+
             if (FilterByAisleRadioButton.Checked == true)
             {
-                FilterComboBox.Items.Add("Show All");
+                for (int r = 0; r  < index; r++)
+                {
+                    string v = GroceryList[1 + (r * 3)];
+                   
+                    if (FilterComboBox.Items.Contains(v))
+                    {
 
+                    }
+                    else 
+                    { 
+                        FilterComboBox.Items.Add(v);
+                        FilterList += v + ",";
+                    }
+                   
+                }   
             }
             else
             {
-                FilterComboBox.Items.Add("Show All");
+                for (int r = 0; r < index; r++)
+                {
+                    string v = GroceryList[2 + (r * 3)];
+
+                    if (FilterComboBox.Items.Contains(v))
+                    {
+
+                    }
+                    else
+                    {
+                        FilterComboBox.Items.Add(v);
+                        FilterList += v + ",";
+                    }
+                    
+                }  
             }
+            
         }
 
-        void DisplayResult(int order)
+        void SearchField() 
+        { 
+            
+        }
+
+        void DisplayResult()
         {
-            item = GroceryList[0 + (3 * order)];
-            aisle = " Aisle" + GroceryList[1 + (3 * order)];
-            category = GroceryList[2 + (3 * order)];
+            string select = DisplayListBox.SelectedItem.ToString();
+
+            for (int r = 0; r < index; r++)
+            {
+                if (GroceryList[0 + (3 * r)].Contains(select))
+                {
+                    item = GroceryList[0 + (3 * r)];
+                    aisle = GroceryList[1 + (3 * r)];
+                    category = GroceryList[2 + (3 * r)];
+                }
+            }
+
+            
             DisplayLabel.Text = $"{item} is on {aisle} with the {category}";
         }
 
         //Event Handlers-------------------------------------------------------------------------------------------------
         private void SearchButton_Click(object sender, EventArgs e)
         {
-
+            SearchField();
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -123,8 +209,8 @@ namespace StansGrocery
 
         private void DisplayListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int order = DisplayListBox.SelectedIndex;
-            DisplayResult(order);
+            
+            DisplayResult();
         }
     }
 }
