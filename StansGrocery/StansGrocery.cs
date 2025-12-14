@@ -21,6 +21,7 @@ namespace StansGrocery
         string Grocery;
         string GroceryFilePath = "..\\..\\..\\..\\Grocery.txt";
         string[] GroceryList;
+        string[] SearchList;
         string TotalGroceryList;
         string item = "";
         string aisle = "";
@@ -44,7 +45,7 @@ namespace StansGrocery
                         Grocery = Grocery.Replace("##LOC", "Aisle ");
                         Grocery = Grocery.Replace("%%CAT", "");
                         Grocery = Grocery.Replace('"', ' ');
-                        Grocery = Grocery.ToLower();
+                        //Grocery = Grocery.ToLower();
                         GroceryList = Grocery.Split(",");
                         Grocery = Grocery + "," + "\n";
                         TotalGroceryList += Grocery;
@@ -56,6 +57,9 @@ namespace StansGrocery
                     } while (fileRead.EndOfStream == false);
 
                     GroceryList = TotalGroceryList.Split(",");
+                    
+                    TotalGroceryList = TotalGroceryList.ToLower();
+                    SearchList = TotalGroceryList.Split(",");
                 }
             }
             catch (Exception)
@@ -176,7 +180,7 @@ namespace StansGrocery
             {
                 for (int r = 0; r < index; r++)
                 {
-                    if (GroceryList[(0 + (3 * r))].Contains(search))
+                    if (SearchList[(0 + (3 * r))].Contains(search))
                     {
                         DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
                     }
