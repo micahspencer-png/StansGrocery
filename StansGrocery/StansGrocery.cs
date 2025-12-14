@@ -78,6 +78,7 @@ namespace StansGrocery
             FilterComboBox.SelectedIndex = 0;
             FilterByAisleRadioButton.Checked = true;
             DisplayListBox.Items.Clear();
+            DisplayLabel.Text = "";
         }
 
         void ChangeCombobox()
@@ -117,6 +118,8 @@ namespace StansGrocery
                     }
                 }
             }
+
+            DisplayListBox.Sorted = true;
         }
 
         void Filter()
@@ -165,13 +168,13 @@ namespace StansGrocery
 
         void SearchField() 
         {
-            string search = SearchTextBox.Text;
-            search = search.ToLower();
+            string searchString = SearchTextBox.Text;
+            searchString = searchString.ToLower();
 
 
             DisplayListBox.Items.Clear();
 
-            if (search == "zzz")
+            if (searchString == "zzz")
             {
                 this.Close();
             }
@@ -180,11 +183,16 @@ namespace StansGrocery
             {
                 for (int r = 0; r < index; r++)
                 {
-                    if (SearchList[(0 + (3 * r))].Contains(search))
+                    if (GroceryList[(0 + (3 * r))].Contains(searchString))
                     {
                         DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
                     }
                 }
+            }
+
+            if (DisplayListBox.Items.Count == 0) 
+            { 
+                DisplayLabel.Text = $"Sorry no matches for {searchString}";
             }
         }
 
