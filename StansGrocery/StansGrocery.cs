@@ -11,6 +11,13 @@ namespace StansGrocery
     //https://github.com/micahspencer-png/StansGrocery.git
     public partial class StansGrocery : Form
     {
+        //For future project adjustments
+        //
+        //Add splashscreen to the project.
+        //adjust list so that null fields can't exist
+        //link about button to a messagebox to show top comments
+        //
+
         public StansGrocery()
         {
             InitializeComponent();
