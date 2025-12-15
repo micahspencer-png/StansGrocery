@@ -28,8 +28,6 @@ namespace StansGrocery
         string item = "";
         string aisle = "";
         string category = "";
-        string[] FilterIndex;
-        string[] DisplayBoxList;
         int index = 0;
         
         void GroceryPath()
@@ -61,9 +59,9 @@ namespace StansGrocery
                     } while (fileRead.EndOfStream == false);
 
                     GroceryList = TotalGroceryList.Split(",");
-                    
                     TotalGroceryList = TotalGroceryList.ToLower();
                     SearchList = TotalGroceryList.Split(",");
+                    DisplayListBox.Sorted = true;
                 }
             }
             catch (Exception)

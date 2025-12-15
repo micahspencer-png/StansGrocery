@@ -120,6 +120,7 @@
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(133, 26);
             aboutToolStripMenuItem.Text = "A&bout";
+
             // 
             // ClearButton
             // 
