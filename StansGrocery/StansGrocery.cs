@@ -1,5 +1,6 @@
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace StansGrocery
 {
@@ -125,6 +126,39 @@ namespace StansGrocery
             DisplayListBox.Sorted = true;
         }
 
+        // Custom comparer for natural numeric sorting
+        public class NaturalStringComparer : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                if (x == null || y == null)
+                    return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
+
+                // Extract numbers from strings
+                var numX = ExtractNumber(x);
+                var numY = ExtractNumber(y);
+
+                // If both have numbers, compare numerically
+                if (numX.HasValue && numY.HasValue)
+                {
+                    int cmp = numX.Value.CompareTo(numY.Value);
+                    if (cmp != 0) return cmp;
+                }
+
+                // Fallback to case-insensitive string comparison
+                return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
+            }
+
+            private int? ExtractNumber(string input)
+            {
+                var match = Regex.Match(input, @"\d+");
+                if (match.Success && int.TryParse(match.Value, out int number))
+                    return number;
+                return null;
+            }
+        }
+
+
         void Filter()
         {
             
@@ -167,8 +201,17 @@ namespace StansGrocery
                     
                 }  
             }
+
             List<string> FilterIndex = Combofilter.Split(",").ToList();
-            FilterIndex.Sort();
+            if (FilterByAisleRadioButton.Checked == true)
+            {
+                FilterIndex.Sort(new NaturalStringComparer());
+            }
+            else
+            {
+
+                FilterIndex.Sort();
+            }
             FilterComboBox.Items.Clear();
             FilterComboBox.Items.Add("Show All");
             foreach (var items in FilterIndex) 
