@@ -1,4 +1,5 @@
 using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 
 namespace StansGrocery
 {
@@ -29,7 +30,7 @@ namespace StansGrocery
         string[] FilterIndex;
         string[] DisplayBoxList;
         int index = 0;
-        string FilterList;
+        
         void GroceryPath()
         {
             try
@@ -41,11 +42,12 @@ namespace StansGrocery
                     do
                     {
                         Grocery = fileRead.ReadLine();
+                        Grocery = Grocery.Replace(" ", "");
                         Grocery = Grocery.Replace("$$ITM", "");
                         Grocery = Grocery.Replace("##LOC", "Aisle ");
                         Grocery = Grocery.Replace("%%CAT", "");
                         Grocery = Grocery.Replace('"', ' ');
-                        
+                        Grocery = Grocery.Trim();
                         GroceryList = Grocery.Split(",");
                         Grocery = Grocery + "," + "\n";
                         TotalGroceryList += Grocery;
@@ -53,8 +55,6 @@ namespace StansGrocery
                         if (GroceryList[0] != "")
                         {
                             DisplayListBox.Items.Add(GroceryList[0]);
-                            Grocery = GroceryList[0].ToLower();
-                            SearchList = Grocery.Split(",");
                         }
                         index++;
                     } while (fileRead.EndOfStream == false);
@@ -127,8 +127,9 @@ namespace StansGrocery
 
         void Filter()
         {
-            FilterComboBox.Items.Clear();
-            FilterComboBox.Items.Add("Show All");
+            
+            string Combofilter = "";
+           
 
             if (FilterByAisleRadioButton.Checked == true)
             {
@@ -143,7 +144,7 @@ namespace StansGrocery
                     else 
                     { 
                         FilterComboBox.Items.Add(v);
-                        FilterList += v + ",";
+                        Combofilter += v + ",";
                     }
                    
                 }   
@@ -152,21 +153,30 @@ namespace StansGrocery
             {
                 for (int r = 0; r < index; r++)
                 {
-                    string v = GroceryList[2 + (r * 3)];
+                    string x = GroceryList[2 + (r * 3)];
 
-                    if (FilterComboBox.Items.Contains(v))
+                    if (FilterComboBox.Items.Contains(x))
                     {
 
                     }
                     else
                     {
-                        FilterComboBox.Items.Add(v);
-                        FilterList += v + ",";
+                        FilterComboBox.Items.Add(x);
+                        Combofilter += x + ",";
                     }
                     
                 }  
             }
-            
+            List<string> FilterIndex = Combofilter.Split(",").ToList();
+            FilterIndex.Sort();
+            FilterComboBox.Items.Clear();
+            FilterComboBox.Items.Add("Show All");
+            foreach (var items in FilterIndex) 
+            { 
+                FilterComboBox.Items.Add(items);
+            }
+
+
         }
 
         void SearchField() 
@@ -186,7 +196,9 @@ namespace StansGrocery
             {
                 for (int r = 0; r < index; r++)
                 {
-                    if (SearchList[(0 + (3 * r))].Contains(searchString))
+                    if (SearchList[(0 + (3 * r))].Contains(searchString) ||
+                        SearchList[(1 + (3 * r))].Contains(searchString) ||
+                        SearchList[(2 + (3 * r))].Contains(searchString) )
                     {
                         DisplayListBox.Items.Add(GroceryList[0 + (3 * r)]);
                     }

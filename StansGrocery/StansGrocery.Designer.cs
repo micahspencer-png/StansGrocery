@@ -151,7 +151,7 @@
             FilterByCategoryRadioButton.TabIndex = 0;
             FilterByCategoryRadioButton.Text = "Cate&gory";
             FilterByCategoryRadioButton.UseVisualStyleBackColor = true;
-            FilterByCategoryRadioButton.CheckedChanged += FilterByAisleRadioButton_CheckedChanged;
+            ;
             // 
             // FilterByAisleRadioButton
             // 
